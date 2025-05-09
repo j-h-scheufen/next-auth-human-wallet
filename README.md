@@ -2,7 +2,7 @@
 
 A monorepo template for web3 projects, currently consisting of a single NextJS app:
 
-- [Web App](./apps/web-app/README.md)
+- [Web App](./apps/web-app)
 
 The monorepo is setup with PNPM workspaces, Biome linting/formatting, Husky for git hooks, and commitlint for commit messages.
 
