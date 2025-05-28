@@ -1,12 +1,13 @@
 import { ChainNotConfiguredError, createConnector } from '@wagmi/core';
 import { SwitchChainError, UserRejectedRequestError, getAddress } from 'viem';
 
-import { type CredentialType, SILK_METHOD } from '@silk-wallet/silk-interface-core';
-import { initSilk } from '@silk-wallet/silk-wallet-sdk';
-import type {
-  InitSilkOptions,
-  SilkEthereumProviderInterface,
-} from '@silk-wallet/silk-wallet-sdk/dist/lib/provider/types';
+import {
+  type CredentialType,
+  type InitSilkOptions,
+  SILK_METHOD,
+  type SilkEthereumProviderInterface,
+  initSilk,
+} from '@silk-wallet/silk-wallet-sdk';
 
 // For reference: WAGMI connector event map: wagmi/packages/core/src/connectors/createConnector.ts
 // type ConnectorEventMap = {
@@ -114,7 +115,6 @@ export default function silk(options?: InitSilkOptions) {
       },
 
       async switchChain({ chainId }) {
-        console.info('Switching chain to ID', chainId);
         try {
           const chain = config.chains.find((x) => x.id === chainId);
           if (!chain) throw new ChainNotConfiguredError();
@@ -134,9 +134,9 @@ export default function silk(options?: InitSilkOptions) {
 
       async disconnect(): Promise<void> {
         const provider = await this.getProvider();
-        provider.uiMessageManager.removeListener('accountsChanged', this.onAccountsChanged);
-        provider.uiMessageManager.removeListener('chainChanged', this.onChainChanged);
-        provider.uiMessageManager.removeListener('disconnect', this.onDisconnect);
+        provider.removeListener('accountsChanged', this.onAccountsChanged);
+        provider.removeListener('chainChanged', this.onChainChanged);
+        provider.removeListener('disconnect', this.onDisconnect);
       },
 
       async requestEmail(): Promise<unknown> {
