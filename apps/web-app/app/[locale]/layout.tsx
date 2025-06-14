@@ -26,7 +26,7 @@ export default async function RootLayout({ params, children }: PropsWithChildren
     <html lang={lang}>
       <body
         className={clsx(
-          'dark min-h-screen antialiased bg-gradient',
+          'min-h-screen antialiased',
           fontSora.variable,
           fontInter.variable,
           fontFigtree.variable,

@@ -1,33 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer components {
-  .page-title {
-    @apply text-5xl sm:text-5xl md:text-6xl 
-      font-sora font-bold 
-      leading-[1.1]
-      pb-2
-      bg-gradient-to-b from-primary-100 via-primary-600 to-primary-100 
-      bg-clip-text text-transparent 
-      drop-shadow-[0_0_30px_rgba(121,217,31,0.6)];
-  }
+@plugin '../../config/heroui.ts';
 
-  .page-explainer {
-    @apply mt-3
-      text-lg sm:text-xl md:text-2xl 
-      text-gray-200 dark:text-gray-300;
-  }
+@source '../../../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 
-  .primary-button {
-    @apply border-2 border-primary-600 bg-gradient-to-b from-primary-300 via-primary-600 to-primary-400 hover:from-primary-400 hover:via-primary-600 hover:to-primary-500 text-black dark:text-slate-950 font-semibold shadow-lg shadow-primary-500/20 transform transition-all hover:scale-105;
-  }
-  
-  .font-sora {
-    font-family: var(--font-sora);
-  }
-  
-  .font-figtree {
-    font-family: var(--font-figtree);
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
