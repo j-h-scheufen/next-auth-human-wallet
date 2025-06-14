@@ -1,3 +1,4 @@
+import type { SilkEthereumProviderInterface } from '@silk-wallet/silk-wallet-sdk';
 import {
   getCsrfToken,
   getSession,
@@ -21,7 +22,7 @@ import { enqueueSnackbar } from 'notistack';
  * all functions.
  * @returns
  */
-const useSignIn = () => {
+const useAuth = () => {
   const [state, setState] = useState<{
     loading?: boolean;
     nonce?: string;
@@ -96,8 +97,13 @@ const useSignIn = () => {
   };
 
   const logout = async () => {
-    return nextAuthSignOut().then(() => {
-      disconnect();
+    const silkConnector = connectors.find((connector) => connector.id === 'silk');
+    disconnect();
+    if (silkConnector) {
+      const provider = await silkConnector.getProvider();
+      await (provider as SilkEthereumProviderInterface).logout();
+    }
+    nextAuthSignOut().then(() => {
       setState({});
     });
   };
@@ -131,4 +137,4 @@ const useSignIn = () => {
   return { signIn, logout, connect, connectError, state };
 };
 
-export default useSignIn;
+export default useAuth;
